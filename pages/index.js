@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import readXlsxFile from 'read-excel-file'
-import { useState } from 'react'
 export default function Home() {
   const handleUpload=(e)=>{
     const skipRows=[0]
@@ -22,8 +21,6 @@ export default function Home() {
         finalFormat[rows[idx][0]]=data;
       })
       console.log("FINAL DATA",finalFormat)
-      // const filteredData=finalFormat.filter(data=>data)
-      // console.log(filteredData)
     }).catch(err=>{
       console.log("ERROR",err)
     })
