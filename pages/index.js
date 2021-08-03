@@ -5,8 +5,9 @@ export default function Home() {
   const handleUpload=(e)=>{
     const skipRows=[0]
     const arrayColumns=[11,14,15,16]
+    const timeColumns = [12,13]
     const finalFormat={}
-    readXlsxFile(e.target.files[0],schema).then((rows) => {
+    readXlsxFile(e.target.files[0]).then((rows) => {
       rows.map((row,idx)=>{
         const data={}
         if(skipRows.includes(idx)){
@@ -15,6 +16,24 @@ export default function Home() {
         row.map((column,columnIdx)=>{
           if(arrayColumns.includes(columnIdx)){
             column=column?.split("\n")
+          }
+          if(timeColumns.includes(columnIdx) && typeof row[columnIdx] === "number" ){
+              let number = row[columnIdx] * 24
+              // Separate the int from the decimal part
+              var hour = Math.floor(number);
+              var decimal = number - hour;
+              var min = 1 / 60;
+              // Round to nearest minute
+              decimal = min * Math.round(decimal / min);
+              var minute = Math.floor(decimal * 60)%60+'';
+              var extraHour = Math.floor(decimal);
+              // Add padding if need
+              if (minute.length < 2) {
+                minute = '0' + minute; 
+              }
+              // Concate hours and minutes
+              let time =  (hour+extraHour) + ':' + minute;
+              column=time;
           }
           data[rows[0][columnIdx]]=column;
         })
@@ -25,6 +44,7 @@ export default function Home() {
       console.log("ERROR",err)
     })
   }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -37,9 +57,9 @@ export default function Home() {
         <h1 className={styles.title}>
           Testing Excel to JSON converter
         </h1>
-        <div style={{display:"flex"}}>        <form>
-        <input type="file" onChange={handleUpload}/>
-        <button type="reset">Clear</button>
+        <div style={{ display: "flex" }}>        <form>
+          <input type="file" onChange={handleUpload} />
+          <button type="reset">Clear</button>
         </form>
         </div>
       </main>
