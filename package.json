@@ -12,7 +12,8 @@
     "next": "11.0.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "read-excel-file": "^5.2.8"
+    "read-excel-file": "^5.2.8",
+    "xlsx": "^0.17.0"
   },
   "devDependencies": {
     "eslint": "7.32.0",

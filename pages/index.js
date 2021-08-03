@@ -18,6 +18,7 @@ export default function Home() {
             column=column?.split("\n")
           }
           if(timeColumns.includes(columnIdx) && typeof row[columnIdx] === "number" ){
+              console.log("VALUE",idx,row[columnIdx])  
               let number = row[columnIdx] * 24
               // Separate the int from the decimal part
               var hour = Math.floor(number);
