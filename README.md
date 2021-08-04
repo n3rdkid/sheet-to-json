@@ -37,4 +37,4 @@ Directly from Google Docs
         finalFormat[rows[idx][0]]=data;
       })
       console.log("FINAL DATA",JSON.stringify(finalFormat,null,"\t"))
-}```
+}
