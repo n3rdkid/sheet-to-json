@@ -7,7 +7,7 @@ Directly from Google Docs
   function sheetToJSON() {
     const rows = SpreadsheetApp.getActiveSheet().getDataRange().getValues();
     const skipRows=[0]
-    const arrayColumns=[11,14,15,16]
+    const arrayColumns=[11,15,16,17]
     const timeColumns = [12,13]
     const finalFormat={}
     rows.map((row,idx)=>{
@@ -18,6 +18,9 @@ Directly from Google Docs
           row.map((column,columnIdx)=>{
             if(arrayColumns.includes(columnIdx)){
               column=column?.split("\n")
+              column=column.filter(value=>value);
+              if(column.length<1)
+              return
             }
             if(timeColumns.includes(columnIdx) && typeof column === "object"){
              column=Utilities.formatDate(column, "UTC", "hh:mm a");
@@ -31,7 +34,6 @@ Directly from Google Docs
               hours = parseInt(hours, 10) + 12;
              }
              column= `${hours}:${minutes}`;
-             console.log(column)
             }
             data[rows[0][columnIdx]]=column;
           })
